@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 
+import com.du.codewarriorcontact.Utils;
 import com.du.codewarriorcontact.model.Contact;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -90,7 +91,7 @@ public class CWDAO {
 		return getFacebookContactsDAO().queryForAll();
 	}
 	
-	public Contact getContactDetailsOfId(int id) throws Exception {
+	public Contact getContactDetailsOfId(long id) throws Exception {
 		Contact ct = new Contact();
 		QueryBuilder<SingleContacts, Integer> qb = getSingleContactsDAO().queryBuilder();
 		qb.where().eq("row_id", id);
@@ -108,7 +109,10 @@ public class CWDAO {
 		ct.firstName = pc.getFirstName();
 		ct.lastName = pc.getLastName();
 		ct.jobTitle = pc.getJobTitle();
-		ct.phoneNumber = pc.getPhoneNumber();
+		ct.phoneNumberHome = pc.getPhoneNumberHome();
+		ct.phoneNumberMobile = pc.getPhoneNumberMobile();
+		ct.phoneNumberWork = pc.getPhoneNumberWork();
+		ct.phoneNumberOther = pc.getPhoneNumberOther();
 		
 		String uri = pc.getPictureUrl();
 		return ct;
@@ -131,38 +135,18 @@ public class CWDAO {
 					Integer.toString(pc.getRowId()),
 					pc.getFirstName(),
 					pc.getLastName(),
-					pc.getPhoneNumber(),
+					pc.getPhoneNumberMobile(),
+					pc.getPhoneNumberHome(),
+					pc.getPhoneNumberWork(),
+					pc.getPhoneNumberOther(),
+					pc.getNote(),
+					pc.getAddress(),
 					pc.getEmail(),
 					pc.getCompany(),
 					pc.getJobTitle(),
-					retrieveContactPhoto(ac,Long.parseLong(pc.getPictureUrl()) ) ));
+					
+					Utils.retrieveContactPhoto(ac,Long.parseLong(pc.getPictureUrl()) ) ));
 		}	
 		return ret;
 	}
-	 private Bitmap retrieveContactPhoto(Activity ac, Long id) {
-    	 
-	        Bitmap photo = null;
-	 
-	        try {
-	            InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(ac.getContentResolver(),
-	                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,id));
-	            	
-	            if (inputStream != null) {
-	            	
-	                photo = BitmapFactory.decodeStream(inputStream);
-	            }
-	            else
-	            {
-	            	return null;
-	            }
-	 
-	            assert inputStream != null;
-	            inputStream.close();
-	 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			return photo;
-	 
-	    }
 }

@@ -8,9 +8,12 @@ public class Contact {
 	public String id;
 	public String firstName ;
 	public String lastName ;
-	public String phoneNumber ; 
-	public String phoneNumberWork ;
+	public String phoneNumberMobile ;
 	public String phoneNumberHome ;
+	public String phoneNumberWork ;
+	public String phoneNumberOther ;
+	public String note ;
+	public String address ;
 	public String email ;
 	public String company ;
 	public String jobTitle ;
@@ -24,7 +27,12 @@ public class Contact {
 	public Contact(String id,
 			String firstName,
 			String lastName,
-			String phoneNumber,
+			String phoneNumberMobile,
+			String phoneNumberHome,
+			String phoneNumberWork,
+			String phoneNumberOther,
+			String note,
+			String address,
 			String email,
 			String company,
 			String jobTitle,
@@ -32,7 +40,12 @@ public class Contact {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
+		this.phoneNumberMobile = phoneNumberMobile;
+		this.phoneNumberHome = phoneNumberHome;
+		this.phoneNumberWork = phoneNumberWork;
+		this.phoneNumberOther = phoneNumberOther;
+		this.note = note;
+		this.address = address;
 		this.email = email;
 		this.company = company;
 		this.jobTitle = jobTitle;

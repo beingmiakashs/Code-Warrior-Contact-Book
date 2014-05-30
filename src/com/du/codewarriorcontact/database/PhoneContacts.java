@@ -17,7 +17,17 @@ public class PhoneContacts {
 	@DatabaseField
     private String email;
 	@DatabaseField
-    private String phone_number;
+    private String phone_number_mobile;
+    @DatabaseField
+    private String phone_number_home;
+    @DatabaseField
+    private String phone_number_work;
+    @DatabaseField
+    private String phone_number_other;
+    @DatabaseField
+    private String note;
+    @DatabaseField
+    private String address;
 	@DatabaseField
     private String company;
 	@DatabaseField
@@ -35,7 +45,12 @@ public class PhoneContacts {
     						String firstName,
     						String lastName,
     						String email,
-    						String phoneNumber,
+    						String phoneNumberMobile,
+    						String phoneNumberHome,
+    						String phoneNumberWork,
+    						String phoneNumberOther,
+    						String note,
+    						String address,
     						String company,
     						String jobTitle,
     						String pictureUrl) {
@@ -43,7 +58,12 @@ public class PhoneContacts {
 		this.first_name = firstName;
 		this.last_name = lastName;
 		this.email = email;
-		this.phone_number = phoneNumber;
+		this.phone_number_mobile = phoneNumberMobile;
+		this.phone_number_home = phoneNumberHome;
+		this.phone_number_work = phoneNumberWork;
+		this.phone_number_other = phoneNumberOther;
+		this.note = note;
+		this.address = address;
 		this.company = company;
 		this.job_title = jobTitle;
 		this.picture_url = pictureUrl;
@@ -87,13 +107,48 @@ public class PhoneContacts {
         this.email = email;
     }
     
-    public String getPhoneNumber() {
-        return phone_number;
+    public String getPhoneNumberMobile() {
+        return phone_number_mobile;
     }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phone_number = phoneNumber;
+    public void setPhoneNumberMobile(String phoneNumberMobile) {
+        this.phone_number_mobile = phoneNumberMobile;
     }
 
+    public String getPhoneNumberHome() {
+        return phone_number_home;
+    }
+    public void setPhoneNumberHome(String phoneNumberHome) {
+        this.phone_number_home = phoneNumberHome;
+    }
+    
+    public String getPhoneNumberWork() {
+        return phone_number_work;
+    }
+    public void setPhoneNumberWork(String phoneNumberWork) {
+        this.phone_number_work = phoneNumberWork;
+    }
+    
+    public String getPhoneNumberOther() {
+        return phone_number_other;
+    }
+    public void setPhoneNumberOther(String phoneNumberOther) {
+        this.phone_number_other = phoneNumberOther;
+    }
+    
+    public String getNote() {
+        return note;
+    }
+    public void setNote(String note) {
+        this.note = note;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
     public String getCompany() {
         return company;
     }

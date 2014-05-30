@@ -67,7 +67,17 @@ public class CustomAdapter extends BaseAdapter{
 		String strDate = sdf.format(c.getTime());
 		
 		holder.txtTime.setText(item.firstName) ;
-		holder.txtNote.setText(item.phoneNumber) ;
+		String phoneNo = "" ;
+		if(item.phoneNumberMobile != null && item.phoneNumberMobile.length() > 0)
+			phoneNo = item.phoneNumberMobile ;
+		else if(item.phoneNumberHome != null && item.phoneNumberHome.length() > 0)
+			phoneNo = item.phoneNumberHome ;
+		else if(item.phoneNumberWork != null && item.phoneNumberWork.length() > 0)
+			phoneNo = item.phoneNumberWork;
+		else if(item.phoneNumberOther != null && item.phoneNumberOther.length() > 0)
+			phoneNo = item.phoneNumberOther; 
+		
+		holder.txtNote.setText(phoneNo) ;
 		holder.time.setText(strDate) ;
 		holder.imageView1.setImageBitmap(item.photo);
 		

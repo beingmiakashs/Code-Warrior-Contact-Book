@@ -50,7 +50,7 @@ public class MessageHistoryDataProvider {
                        }
                        Contact c = new Contact() ;
                		   c.firstName = name ;
-               		   c.phoneNumber = phoneNo ;
+               		   c.phoneNumberMobile = phoneNo ;
                		   
                		   Bitmap photo = retrieveContactPhoto(Long.parseLong(id));
                		   if(photo!=null)

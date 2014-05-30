@@ -1,5 +1,13 @@
 package com.du.codewarriorcontact;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import android.app.Activity;
+import android.content.ContentUris;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 public class Utils {
@@ -12,4 +20,30 @@ public class Utils {
 			Log.i("testing", ss);
 		}
 	}
+	public static Bitmap retrieveContactPhoto(Activity ac, Long id) {
+   	 
+        Bitmap photo = null;
+ 
+        try {
+            InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(ac.getContentResolver(),
+                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,id));
+            	
+            if (inputStream != null) {
+            	
+                photo = BitmapFactory.decodeStream(inputStream);
+            }
+            else
+            {
+            	return null;
+            }
+ 
+            assert inputStream != null;
+            inputStream.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return photo;
+ 
+    }
 }

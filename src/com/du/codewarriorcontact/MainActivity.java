@@ -29,6 +29,7 @@ import com.du.codewarriorcontact.adapter.DrawerListAdapter;
 import com.du.codewarriorcontact.adapter.TabsAdapter;
 import com.du.codewarriorcontact.contactspool.PhoneContactsPool;
 import com.du.codewarriorcontact.settings.SettingPage;
+import com.du.codewarriorcontact.taskmanager.SyncTask;
 import com.du.codewarriorcontact.util.GlobalConstant;
 
 public class MainActivity extends FragmentActivity {
@@ -182,9 +183,14 @@ public class MainActivity extends FragmentActivity {
     }
     
     private void SyncContacts(){
-    	PhoneContactsPool pool = new PhoneContactsPool(this) ;
-    	pool.SyncAllContact();
-    	
+//    	FetchTask ft = new FetchTask();
+//    	ft
+//    	PhoneContactsPool pool = new PhoneContactsPool(this) ;
+//    	
+//    	pool.SyncAllContact();
+    	SyncTask st = new SyncTask(this) ;
+    	st.execute() ;
+    	Utils.print("Contacts sync finished");
     }
     
     @Override

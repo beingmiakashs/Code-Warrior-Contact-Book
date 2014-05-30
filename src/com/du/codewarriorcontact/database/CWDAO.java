@@ -106,7 +106,7 @@ public class CWDAO {
 		String uri = pc.getPictureUrl();
 		return ct;
 	}
-	
+
 //	public List<Contact> getContactList() {
 //		List<SingleContacts> sc = getSingleContactsDAO().queryForAll();
 //		

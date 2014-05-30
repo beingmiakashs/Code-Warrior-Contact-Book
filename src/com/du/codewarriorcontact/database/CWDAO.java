@@ -1,8 +1,16 @@
 package com.du.codewarriorcontact.database;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.ContentUris;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 
 import com.du.codewarriorcontact.model.Contact;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -91,7 +99,7 @@ public class CWDAO {
 		
 		String cid = sc.getCid();
 		QueryBuilder<PhoneContacts, Integer> qb2 = getPhoneContactsDAO().queryBuilder();
-		qb.where().eq("cid", cid);
+		qb2.where().eq("cid", cid);
 		PhoneContacts pc = qb2.query().get(0);
 		if(pc == null) return null;
 		
@@ -106,11 +114,55 @@ public class CWDAO {
 		return ct;
 	}
 
-//	public List<Contact> getContactList() {
-//		List<SingleContacts> sc = getSingleContactsDAO().queryForAll();
-//		
-//		QueryBuilder<SingleContacts, Integer> qb = getSingleContactsDAO().queryBuilder();
-//			
-//		}
-//	}
+	public List<Contact> getContactsList(Activity ac) throws SQLException {
+		List<Contact> ret = new ArrayList<Contact>();
+		
+		List<SingleContacts> scList = getSingleContactsDAO().queryForAll();
+		for (SingleContacts sc : scList ) {
+			String cid = sc.getCid();
+			String fid = sc.getFid();
+			String gid = sc.getGid();
+			
+			QueryBuilder<PhoneContacts, Integer> qb = getPhoneContactsDAO().queryBuilder();
+			qb.where().eq("cid", cid);
+			PhoneContacts pc = qb.query().get(0);
+			//will integrate facebook and gmail later.
+			ret.add(new Contact(
+					Integer.toString(pc.getRowId()),
+					pc.getFirstName(),
+					pc.getLastName(),
+					pc.getPhoneNumber(),
+					pc.getEmail(),
+					pc.getCompany(),
+					pc.getJobTitle(),
+					retrieveContactPhoto(ac,Long.parseLong(pc.getPictureUrl()) ) ));
+		}	
+		return ret;
+	}
+	 private Bitmap retrieveContactPhoto(Activity ac, Long id) {
+    	 
+	        Bitmap photo = null;
+	 
+	        try {
+	            InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(ac.getContentResolver(),
+	                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,id));
+	            	
+	            if (inputStream != null) {
+	            	
+	                photo = BitmapFactory.decodeStream(inputStream);
+	            }
+	            else
+	            {
+	            	return null;
+	            }
+	 
+	            assert inputStream != null;
+	            inputStream.close();
+	 
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+			return photo;
+	 
+	    }
 }

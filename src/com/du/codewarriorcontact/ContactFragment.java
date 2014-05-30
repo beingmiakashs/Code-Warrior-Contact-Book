@@ -1,8 +1,10 @@
 package com.du.codewarriorcontact;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.du.codewarriorcontact.adapter.CustomAdapter;
+import com.du.codewarriorcontact.database.CWDAO;
 import com.du.codewarriorcontact.dataprovider.ContactListDataProvider;
 import com.du.codewarriorcontact.model.Contact;
 
@@ -23,11 +25,17 @@ public class ContactFragment extends ListFragment{
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
-		ContactListDataProvider data = new ContactListDataProvider();
-	      ArrayList<Contact> list = data.displayContacts();
-	      
-	      adapter = new CustomAdapter(list) ;
-	      setListAdapter(adapter);
+//		ContactListDataProvider data = new ContactListDataProvider();
+//	      ArrayList<Contact> list = data.displayContacts();
+	      ArrayList<Contact> list;
+		try {
+			list = (ArrayList<Contact>) CWDAO.getCWdao().getContactsList(getActivity());
+			adapter = new CustomAdapter(list) ;
+		    setListAdapter(adapter);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			Utils.print("Cant fetch Contact Data");
+		}
 		
 	      return super.onCreateView(inflater, container, savedInstanceState);
 	}

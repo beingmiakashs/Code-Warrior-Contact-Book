@@ -23,6 +23,6 @@ public class ContactDetails extends Activity {
 		
 		String id = getIntent().getStringExtra(Utils.ContactObject);
 		
-		Contacts ct = CWDAO.getCWdao().getContactDetailsOfId(id);
+//		Contacts ct = CWDAO.getCWdao().getContactDetailsOfId(id);
 	}
 }

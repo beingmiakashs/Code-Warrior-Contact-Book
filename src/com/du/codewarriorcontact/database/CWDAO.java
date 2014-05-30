@@ -82,7 +82,7 @@ public class CWDAO {
 		return getFacebookContactsDAO().queryForAll();
 	}
 	
-	public Contact getContactDetailsOfId(int id) {
+	public Contact getContactDetailsOfId(int id) throws Exception {
 		Contact ct = new Contact();
 		QueryBuilder<SingleContacts, Integer> qb = getSingleContactsDAO().queryBuilder();
 		qb.where().eq("row_id", id);

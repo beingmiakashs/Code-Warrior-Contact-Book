@@ -1,6 +1,7 @@
 package com.du.codewarriorcontact.settings;
 
 import com.du.codewarriorcontact.R;
+import com.du.codewarriorcontact.util.GlobalConstant;
 import com.du.codewarriorcontact.util.MessageUtilities;
 
 import android.content.DialogInterface;
@@ -18,7 +19,7 @@ import android.widget.Toast;
 
 public class NearPlaceSettingFragment extends Fragment {
 	
-	private CheckBox smsCheck;
+	private CheckBox nearPlaceCheck;
 	private SharedPreferences preferences;
 	private Editor editor;
 	
@@ -34,30 +35,30 @@ public class NearPlaceSettingFragment extends Fragment {
 		editor = preferences.edit();
 		
 		
-		smsCheck = (CheckBox) getActivity().findViewById(R.id.near_place_check);
+		nearPlaceCheck = (CheckBox) getActivity().findViewById(R.id.near_place_check);
 		
 		
 		String status = preferences.getString("sms", "0");
 		
-		if(status.equals("on"))
-			smsCheck.setChecked(true);
+		if(status.equals(GlobalConstant.KEY_ON))
+			nearPlaceCheck.setChecked(true);
 		else
-			smsCheck.setChecked(false);
+			nearPlaceCheck.setChecked(false);
 		
 		
-		smsCheck.setOnClickListener(new View.OnClickListener() {
+		nearPlaceCheck.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if (smsCheck.isChecked())
+				if (nearPlaceCheck.isChecked())
 				{
-					MessageUtilities.confirmUser(getActivity(), "Do you really want to Emergency SMS Service ?",yesStopClick, noStopClick);
+					MessageUtilities.confirmUser(getActivity(), "Do you really want to start near place status update ?",yesStopClick, noStopClick);
 				}
 				else
 				{
-					editor.putString("sms", "off");
+					editor.putString(GlobalConstant.KEY_NEAR_ME_SERVICE, GlobalConstant.KEY_OFF);
 					editor.commit();
-					Toast.makeText(getActivity(), "sending sms is disabled now", Toast.LENGTH_SHORT).show();	
+					Toast.makeText(getActivity(), "Near place status update is disabled now", Toast.LENGTH_SHORT).show();
 				}
 				DualPaneSettingsRefresher.refreshListAdapter(getActivity());
 			}
@@ -68,18 +69,16 @@ public class NearPlaceSettingFragment extends Fragment {
     private DialogInterface.OnClickListener yesStopClick = new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			editor.putString("sms", "on");
+			editor.putString(GlobalConstant.KEY_NEAR_ME_SERVICE, GlobalConstant.KEY_ON);
 			editor.commit();
-			Toast.makeText(getActivity(), "sending sms is active now", Toast.LENGTH_SHORT).show();
-			
-			DualPaneSettingsRefresher.refreshListAdapter(getActivity());
+			Toast.makeText(getActivity(), "Near place status update is active now", Toast.LENGTH_SHORT).show();
 		}
 	};
 
 	private DialogInterface.OnClickListener noStopClick = new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			smsCheck.setChecked(false);
+			nearPlaceCheck.setChecked(false);
 		}
 	};
 

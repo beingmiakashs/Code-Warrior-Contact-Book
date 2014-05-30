@@ -24,6 +24,8 @@ public final class GlobalConstant {
 	public static final String KEY_WISH_FRIENDS_SERVICE = "KEY_WISH_FRIENDS_SERVICE";
 	public static final String KEY_NEAR_ME_SERVICE = "KEY_NEAR_ME_SERVICE";
 	public static final String KEY_SHAKE_CALL_SERVICE = "KEY_SHAKE_CALL_SERVICE";
+	public static final String KEY_NEAR_SERVICE_LAT = "KEY_NEAR_SERVICE_LAT";
+	public static final String KEY_NEAR_SERVICE_LON = "KEY_NEAR_SERVICE_LON";
 	//public static final String KEY_
 	
 	public static final String KEY_ACTION_TYPE = "action_type";

@@ -1,22 +1,242 @@
 package com.du.codewarriorcontact;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.du.adapter.DrawerListAdapter;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.app.ActionBar;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+	private String[] drawerItems;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private int ITEM;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+//		init(savedInstanceState);
+		//create the drawer
+		drawerItems = getResources().getStringArray(R.array.drawermenulist);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+//        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new DrawerListAdapter(this,
+                R.layout.drawer_list_item, new ArrayList<String>(Arrays.asList(drawerItems))));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
+     // enable ActionBar app icon to behave as action to toggle nav drawer
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+                ) {
+            public void onDrawerClosed(View view) {
+            	invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+            
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        int ITEM = Utils.SELECTED_ITEM;
+        if (ITEM == -1) {
+        	Utils.print("instance not saved");
+            selectItem(0);
+        } else 
+        	selectItem(ITEM);
+		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		
+		Fragment myFragment = (Fragment) getFragmentManager().findFragmentByTag("HOME_PAGE");
+		if (keyCode == KeyEvent.KEYCODE_BACK && myFragment != null &&  myFragment.isVisible()) {
+//		   Utils.print("fragment found");
+	    	showExitDialog();
+	    	return false;
+		}
+		
+		Fragment fragment = (Fragment) getFragmentManager().findFragmentByTag("contacts");
+		if (fragment != null &&  fragment.isVisible()) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK && ITEM != 0 ) {
+	        selectItem(0);
+	        return false;
+	    }}
+//	    else if (keyCode == KeyEvent.KEYCODE_BACK && Utils.SELECTED_ITEM == 0) {
+//	    	
+//	    	showExitDialog();
+//	    	return false;
+//	    }
+
+	    return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+//        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+         // The action bar home/up action should open or close the drawer.
+         // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+	protected void onDestroy() {
+	    super.onDestroy();
+//	    SSDAO.getSSdao().close();
+//	    Utils.alarmManagerm.cancel(Utils.pendingIntent);
+//	    unregisterReceiver(Utils.broadcastReceiver);
+	}
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);
+    	
+    	outState.putInt("selected_item", ITEM);
+    }
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+    	
+    	   ITEM = savedInstanceState.getInt("selected_item");
+    }
+    
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void showExitDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		String builderMessage = "Do you really want to quit?";
+	    builder.setMessage(builderMessage)
+	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   finish();
+	               }
+	           })
+	           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int id) {
+	               }
+	           });
+	    builder.create();
+	    builder.setCancelable(false);
+	    AlertDialog alert = builder.show();
+	    TextView msgView = (TextView) alert.findViewById(android.R.id.message);
+	}
+    
+    private void selectItem(int position) {
+		Fragment fragment = null;
+		int i = 0;
+		switch (position) {
+			case 0:
+				fragment = new Contacts();
+				i = 11;
+				break;
+//			case 1:
+//				fragment = new BazarDor();
+//				break;
+//			case 1:
+//				fragment = new Sofol();
+//				break;
+//			case 2:
+//				fragment = new SoncoiBriddhi();
+//				break;
+//			case 3:
+//				fragment = new UporiAe();
+//				break;
+//			case 4:
+//				fragment = new JiggasaFragment();
+//				break;
+//			case 5:
+//				fragment = new SettingsFragment();
+//				break;
+//			default:
+//				fragment = new DailyHisab();
+//				break;
+		}
+        FragmentManager fragmentManager = getFragmentManager();
+        String tag = "contacts";
+        if(i == 11) {
+        	tag = "HOME_PAGE";
+        }
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
+        
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+        ITEM = position;
+        Utils.SELECTED_ITEM = position;
 	}
 
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	    @Override
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	    	Utils.print("position clicked" + position);
+	    	selectItem(position);
+	    }
+	}
 }

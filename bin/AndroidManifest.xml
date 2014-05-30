@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.du.codewarriorcontact"
+    android:installLocation="auto"
+    android:theme="@android:style/Theme.Holo"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -31,11 +33,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.du.codewarriorcontact.ContactDetails"
-            >
+        <activity android:name="com.du.codewarriorcontact.ContactDetails">
             
         </activity>
+        
+        <activity
+            android:name="com.du.codewarriorcontact.settings.SettingPage"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        
     </application>
     
     <uses-permission android:name="android.permission.READ_CONTACTS"/>

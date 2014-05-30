@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import com.du.codewarriorcontact.adapter.DrawerListAdapter;
 import com.du.codewarriorcontact.adapter.TabsAdapter;
 import com.du.codewarriorcontact.contactspool.PhoneContactsPool;
+import com.du.codewarriorcontact.settings.SettingPage;
+import com.du.codewarriorcontact.util.GlobalConstant;
 
 public class MainActivity extends FragmentActivity {
 	
@@ -103,7 +106,9 @@ public class MainActivity extends FragmentActivity {
 //		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.ic_launcher), CallHistoryFragment.class, null);
 //        
 //        
-
+        
+        GlobalConstant.mContext = getApplicationContext();
+        
 	}
 
 	@Override
@@ -149,17 +154,31 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-         // The action bar home/up action should open or close the drawer.
-         // ActionBarDrawerToggle will take care of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
         	switch(item.getItemId()){
 	        	case R.id.action_sync:
 	        		SyncContacts() ;
 	        		break ;
-	        	}
+	        	case R.id.action_settings:
+	        		Intent in = new Intent(getApplicationContext(),SettingPage.class);
+	        		startActivity(in);
+	        		break ;
+	        }
             return true;
         }
-        return super.onOptionsItemSelected(item);
+        else{
+        	switch(item.getItemId()){
+	        	case R.id.action_sync:
+	        		SyncContacts() ;
+	        		break ;
+	        	case R.id.action_settings:
+	        		Intent in = new Intent(getApplicationContext(),SettingPage.class);
+	        		startActivity(in);
+	        		break ;
+	        }
+        	return true;
+        }
+        //return super.onOptionsItemSelected(item);
     }
     
     private void SyncContacts(){

@@ -40,28 +40,35 @@ public final class R {
     }
     public static final class drawable {
         public static final int action_search=0x7f020000;
-        public static final int contact_icon=0x7f020001;
-        public static final int drawer_shadow=0x7f020002;
-        public static final int hello=0x7f020003;
-        public static final int ic_action_accept=0x7f020004;
-        public static final int ic_action_alarms=0x7f020005;
-        public static final int ic_action_camera=0x7f020006;
-        public static final int ic_action_cancel=0x7f020007;
-        public static final int ic_action_collapse=0x7f020008;
-        public static final int ic_action_discard=0x7f020009;
-        public static final int ic_action_edit=0x7f02000a;
-        public static final int ic_action_expand=0x7f02000b;
-        public static final int ic_action_new=0x7f02000c;
-        public static final int ic_action_overflow=0x7f02000d;
-        public static final int ic_action_refresh=0x7f02000e;
-        public static final int ic_action_undo=0x7f02000f;
-        public static final int ic_drawer=0x7f020010;
-        public static final int ic_filter=0x7f020011;
-        public static final int ic_launcher=0x7f020012;
-        public static final int welcome=0x7f020013;
+        public static final int bg=0x7f020001;
+        public static final int bg_blue=0x7f020002;
+        public static final int contact_icon=0x7f020003;
+        public static final int drawer_shadow=0x7f020004;
+        public static final int hello=0x7f020005;
+        public static final int ic_action_accept=0x7f020006;
+        public static final int ic_action_alarms=0x7f020007;
+        public static final int ic_action_camera=0x7f020008;
+        public static final int ic_action_cancel=0x7f020009;
+        public static final int ic_action_collapse=0x7f02000a;
+        public static final int ic_action_discard=0x7f02000b;
+        public static final int ic_action_edit=0x7f02000c;
+        public static final int ic_action_expand=0x7f02000d;
+        public static final int ic_action_new=0x7f02000e;
+        public static final int ic_action_overflow=0x7f02000f;
+        public static final int ic_action_refresh=0x7f020010;
+        public static final int ic_action_undo=0x7f020011;
+        public static final int ic_drawer=0x7f020012;
+        public static final int ic_filter=0x7f020013;
+        public static final int ic_launcher=0x7f020014;
+        public static final int ic_setting=0x7f020015;
+        public static final int list_item_bg=0x7f020016;
+        public static final int list_item_bg_hover=0x7f020017;
+        public static final int row=0x7f020018;
+        public static final int welcome=0x7f020019;
     }
     public static final class id {
-        public static final int action_sync=0x7f0b0011;
+        public static final int action_settings=0x7f0b001c;
+        public static final int action_sync=0x7f0b001b;
         public static final int content_frame=0x7f0b0001;
         public static final int drawer_item_text=0x7f0b000a;
         public static final int drawer_layout=0x7f0b0000;
@@ -71,14 +78,24 @@ public final class R {
         public static final int imageView1=0x7f0b000e;
         public static final int left_drawer=0x7f0b0002;
         public static final int name=0x7f0b0004;
+        public static final int near_place_check=0x7f0b0016;
+        public static final int overView=0x7f0b0018;
         public static final int pager=0x7f0b0009;
         public static final int phone=0x7f0b0005;
         public static final int photo=0x7f0b0003;
         public static final int progBar1=0x7f0b0010;
+        public static final int radText=0x7f0b0015;
+        public static final int radiusinfo=0x7f0b0014;
+        public static final int settingList=0x7f0b0011;
+        public static final int settingsDetailsContainer=0x7f0b001a;
+        public static final int settingsListFragment=0x7f0b0019;
         public static final int status=0x7f0b000b;
         public static final int textView1=0x7f0b000c;
         public static final int textView2=0x7f0b000d;
         public static final int textView3=0x7f0b000f;
+        public static final int title_setting=0x7f0b0017;
+        public static final int view1=0x7f0b0012;
+        public static final int view2=0x7f0b0013;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -88,6 +105,12 @@ public final class R {
         public static final int firstscreen=0x7f030004;
         public static final int list_item=0x7f030005;
         public static final int main_splash_screen=0x7f030006;
+        public static final int setting=0x7f030007;
+        public static final int setting_near_place=0x7f030008;
+        public static final int setting_row=0x7f030009;
+        public static final int settings_list=0x7f03000a;
+        public static final int settings_list_fragment=0x7f03000b;
+        public static final int settings_list_tablet=0x7f03000c;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

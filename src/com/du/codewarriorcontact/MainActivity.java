@@ -3,18 +3,16 @@ package com.du.codewarriorcontact;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.du.adapter.DrawerListAdapter;
+import com.du.codewarriorcontact.adapter.DrawerListAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.app.ActionBar;
 import android.view.KeyEvent;

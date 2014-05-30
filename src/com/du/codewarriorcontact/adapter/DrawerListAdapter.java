@@ -1,4 +1,4 @@
-package com.du.adapter;
+package com.du.codewarriorcontact.adapter;
 
 import com.du.codewarriorcontact.R;
 import java.util.List;

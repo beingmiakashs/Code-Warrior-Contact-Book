@@ -285,7 +285,7 @@ public class PhoneContactsPool implements IContactsPool{
         		  Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(id));
         		  Uri photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
         		  
-                  PhoneContacts pc = new PhoneContacts(id, firstName, lastName, fullEmail, phone, orgName, jobTitle, photoUri.toString());
+                  PhoneContacts pc = new PhoneContacts(id, firstName, lastName, fullEmail, phone, orgName, jobTitle, id);
                   CWDAO.getCWdao().getPhoneContactsDAO().createOrUpdate(pc);
                   CWDAO.getCWdao().getSingleContactsDAO().createOrUpdate(new 
                 		  SingleContacts(pc.getCid(), "", ""));

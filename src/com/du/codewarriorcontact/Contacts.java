@@ -1,6 +1,7 @@
 package com.du.codewarriorcontact;
 
 import com.du.codewarriorcontact.adapter.TabsAdapter;
+import com.du.codewarriorcontact.database.CWDAO;
 
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -20,7 +21,7 @@ public class Contacts extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.contacts, container, false);
-		
+		CWDAO.getCWdao().init(getActivity());
 		pager = new ViewPager(getActivity());
 		pager.setId(R.id.pager);
 		getActivity().setContentView(pager);
@@ -37,4 +38,5 @@ public class Contacts extends Fragment {
 	    return view;
 	}
 
+	
 }

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.du.codewarriorcontact.MainActivity"
+            android:name="com.du.codewarriorcontact.MainSplashScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.du.codewarriorcontact.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.du.codewarriorcontact.ContactDetails"
+            >
+            
+        </activity>
     </application>
+    
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
 </manifest>

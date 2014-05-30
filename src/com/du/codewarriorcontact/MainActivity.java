@@ -3,28 +3,35 @@ package com.du.codewarriorcontact;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.du.codewarriorcontact.adapter.DrawerListAdapter;
-
-import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.res.Configuration;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import com.du.codewarriorcontact.adapter.DrawerListAdapter;
+import com.du.codewarriorcontact.adapter.TabsAdapter;
+import com.du.codewarriorcontact.contactspool.PhoneContactsPool;
 
+public class MainActivity extends FragmentActivity {
+	
+	public static FragmentActivity activity;
+	
 	private String[] drawerItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -77,19 +84,38 @@ public class MainActivity extends Activity {
             selectItem(0);
         } else 
         	selectItem(ITEM);
-		
+        
+        
+        
+        //list & tab fragments.
+        activity = this;
+//		
+//		pager = new ViewPager(this);
+//		pager.setId(R.id.pager);
+//		setContentView(pager);
+//		
+//		final ActionBar bar = getActionBar();
+//		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//		
+//		mTabsAdapter = new TabsAdapter(this, pager);
+//		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.ic_launcher), MessageFragment.class, null);
+//		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.ic_launcher), ContactFragment.class, null);
+//		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.ic_launcher), CallHistoryFragment.class, null);
+//        
+//        
+
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-		
+
 		Fragment myFragment = (Fragment) getFragmentManager().findFragmentByTag("HOME_PAGE");
 		if (keyCode == KeyEvent.KEYCODE_BACK && myFragment != null &&  myFragment.isVisible()) {
 //		   Utils.print("fragment found");
 	    	showExitDialog();
 	    	return false;
 		}
-		
+
 		Fragment fragment = (Fragment) getFragmentManager().findFragmentByTag("contacts");
 		if (fragment != null &&  fragment.isVisible()) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK && ITEM != 0 ) {
@@ -107,8 +133,8 @@ public class MainActivity extends Activity {
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -117,7 +143,7 @@ public class MainActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
 //        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+//        menu.findItem(R.id.action_sync).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -126,9 +152,20 @@ public class MainActivity extends Activity {
          // The action bar home/up action should open or close the drawer.
          // ActionBarDrawerToggle will take care of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
+        	switch(item.getItemId()){
+	        	case R.id.action_sync:
+	        		SyncContacts() ;
+	        		break ;
+	        	}
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    private void SyncContacts(){
+    	PhoneContactsPool pool = new PhoneContactsPool(this) ;
+    	pool.SyncAllContact();
+    	
     }
     
     @Override

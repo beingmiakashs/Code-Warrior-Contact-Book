@@ -8,7 +8,6 @@ import com.du.codewarriorcontact.model.Contact;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.sakin.sohojshoncoi.database.Category;
 
 public class CWDAO {
 
